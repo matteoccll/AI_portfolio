@@ -12,9 +12,9 @@ carry the commit history, tests, and failure write-ups that show the work.
 | Project | What it is | Links |
 |---|---|---|
 | **Indulj** | Static marketing site for a mobile massage therapy service. Design-token CSS architecture, fluid `clamp()` typography, fully accessibility-compliant, no framework, no build step. | [live site](https://matteoccll.github.io/indulj_website/) · [repo](https://github.com/matteoccll/indulj_website) |
-| **BiasMiti** | Manifest V3 browser extension implementing four cognitive-debiasing mechanisms (base-rate neglect, anchoring) entirely client-side — no LLM, no network. Grounded in the cognitive-psychology literature. 86 passing tests; demo recorded on live Wikipedia. | [repo](<BIASMITI_REPO_URL>) |
-| **Polymarket Scanner** | Python CLI that fetches the full Polymarket catalog via the Gamma API and filters it to tractable markets through a six-stage pipeline with a deduplicated rejection-audit cache. 53 tests. Pure data pipeline — no trading. | [repo](<SCANNER_REPO_URL>) |
-| **Polymarket Trading Bot** | Three-mode systems project: topic-filtered on-chain WebSocket monitoring, a paper-trading engine with dual-regime P&L, and a live CLOB execution layer behind a nine-gate risk manager and circuit breaker. See its `DECISIONS.md` for diagnosed failures. | [repo](<TRADINGBOT_REPO_URL>) |
+| **BiasMiti** | Manifest V3 browser extension implementing four cognitive-debiasing mechanisms (base-rate neglect, anchoring) entirely client-side — no LLM, no network. Grounded in the cognitive-psychology literature. 86 passing tests; demo recorded on live Wikipedia. | [repo](https://github.com/matteoccll/BiasMiti_Extension) |
+| **Polymarket Scanner** | Python CLI that fetches the full Polymarket catalog via the Gamma API and filters it to tractable markets through a six-stage pipeline with a deduplicated rejection-audit cache. 53 tests. Pure data pipeline — no trading. | [repo](https://github.com/matteoccll/Polymarket_Scanner) |
+| **Polymarket Trading Bot** | Three-mode systems project: topic-filtered on-chain WebSocket monitoring, a paper-trading engine with dual-regime P&L, and a live CLOB execution layer behind a nine-gate risk manager and circuit breaker. See its `DECISIONS.md` for diagnosed failures. | [repo](https://github.com/matteoccll/Armed_Intelbot) |
 
 > For the trading bot and scanner, the engineering is the point — async event
 > processing, on-chain log decoding, risk-gate state machines, API-key rotation.
