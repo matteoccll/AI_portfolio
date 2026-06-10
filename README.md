@@ -19,13 +19,9 @@ design document in this repository; **Live** is a running deployment.
 |---|---|---|
 | **Indulj** | Static marketing site for a mobile massage therapy service. Design-token CSS, fluid `clamp()` typography, fully accessibility-compliant, no framework, no build step. Work in progress (~3 hours in, no prior web-development experience); content and copy are placeholders pending sign-off from the client. Published with the subject's knowledge and permission. | [live](https://matteoccll.github.io/indulj_website/) · [repo](https://github.com/matteoccll/indulj_website) |
 | **BiasMiti** | Manifest V3 browser extension implementing four cognitive-debiasing mechanisms (base-rate neglect, anchoring) entirely client-side — no LLM, no network. Grounded in the cognitive-psychology literature. 86 passing tests; demo recorded on live Wikipedia. | [repo](https://github.com/matteoccll/BiasMiti_Extension) · [spec](software/bias_browser_extension/bias_extension_reference_manual.md) |
-| **Polymarket Scanner** | Python CLI that fetches the full Polymarket catalog via the Gamma API and filters it to tractable markets through a six-stage pipeline with a deduplicated rejection-audit cache. 53 tests. Pure data pipeline — no trading. | [repo](https://github.com/matteoccll/Polymarket_Scanner) · [spec](software/polymarket-scanner/spec%20scanner.md) |
-| **Armed Intelbot** | Three-mode systems project: topic-filtered on-chain WebSocket monitoring, a paper-trading engine with dual-regime P&L, and a live CLOB execution layer behind a nine-gate risk manager and circuit breaker. Its `DECISIONS.md` records three diagnosed failures. | [repo](https://github.com/matteoccll/Armed_Intelbot) · [spec](software/polymarket-trading-bot/spec.md) |
+| **Polymarket Scanner** | Data pipeline. Python CLI that fetches the full Polymarket catalog via the Gamma API and filters it to tractable markets through a six-stage pipeline with a deduplicated rejection-audit cache. 53 tests. | [repo](https://github.com/matteoccll/Polymarket_Scanner) · [spec](software/polymarket-scanner/spec%20scanner.md) |
+| **Armed Intelbot** | Three-mode systems project: topic-filtered on-chain WebSocket monitoring, a paper-simulator engine with dual-regime P&L, and a live CLOB execution layer behind a nine-gate risk manager and circuit breaker. Its `DECISIONS.md` records three diagnosed failures. | [repo](https://github.com/matteoccll/Armed_Intelbot) · [spec](software/polymarket-trading-bot/spec.md) |
 | **AP Outreach Agent** | Claude Code-orchestrated six-component pipeline for autonomous job-application outreach across NHS Trusts, private practices, and third-sector organisations. Design spec only — not implemented. | [spec](software/ap_outreach_agent_spec/ap_outreach_agent_spec.md) |
-
-> For the scanner and Intelbot, the engineering is the point — async event
-> processing, on-chain log decoding, risk-gate state machines, API-key rotation.
-> The prediction market is just the data source.
 
 ---
 
