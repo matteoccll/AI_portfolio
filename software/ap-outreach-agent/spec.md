@@ -1,4 +1,4 @@
-# AP Volunteer Outreach Agent — Build Specification
+# AP Outreach Agent — Build Specification
 **Version:** 2.3
 **Stack:** Claude Code (orchestrator) · TypeScript · Node 22.13+ · `node:sqlite` (built-in) · MCP (Outlook/Microsoft Graph, Tavily Search, Firecrawl) · Playwright (optional, puppet mode)
 **Owner:** MSc Psychology candidate seeking voluntary Assistant Psychologist positions

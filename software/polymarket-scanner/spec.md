@@ -1,4 +1,4 @@
-# Spec 2: Polymarket Scanner
+# Polymarket Scanner
 
 ## Standalone Market Discovery & Filtering
 

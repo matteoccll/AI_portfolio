@@ -1,4 +1,4 @@
-# Cognitive Bias Mitigation Extension — Reference Manual
+# BiasMiti — Reference Manual
 **Version:** 1.0 (living document)
 **Last updated:** 2026-05-30
 **Scope:** Bias 2 (Base-rate Neglect) + Bias 3 (Anchoring) — four shipped features, fully deterministic, zero LLM, zero network at runtime.

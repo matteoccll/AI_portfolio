@@ -1,4 +1,4 @@
-# Armed IntelBot — Technical Reference
+# Armed Intelbot — Technical Reference
 
 **Audience**: Claude Code (or any developer continuing this project).
 
@@ -6,7 +6,7 @@
 
 ## Purpose
 
-Armed IntelBot monitors a Polymarket trading bot's wallet on Polygon. When the target bot trades, IntelBot:
+Armed Intelbot monitors a Polymarket trading bot's wallet on Polygon. When the target bot trades, IntelBot:
 
 1. Detects the trade on-chain via Alchemy WebSocket
 2. Resolves `token_id` → market metadata via Polymarket CLOB API
