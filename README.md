@@ -20,10 +20,10 @@ design document in this repository.
 
 | Project | What it is | Links |
 |---|---|---|
-| **BiasMiti** | Manifest V3 browser extension implementing four cognitive-debiasing mechanisms (base-rate neglect, anchoring) entirely client-side — no LLM, no network. Grounded in the cognitive-psychology literature. 86 passing tests; demo recorded on live Wikipedia. | [repo](https://github.com/matteoccll/BiasMiti_Extension) · [spec](software/bias_browser_extension/bias_extension_reference_manual.md) |
-| **Polymarket Scanner** | Data pipeline. Python CLI that fetches the full Polymarket catalog via the Gamma API and filters it to tractable markets through a six-stage pipeline with a deduplicated rejection-audit cache. 53 tests. | [repo](https://github.com/matteoccll/Polymarket_Scanner) · [spec](software/polymarket-scanner/spec%20scanner.md) |
-| **Armed Intelbot** | Three-mode systems project: topic-filtered on-chain WebSocket monitoring, a paper-simulator engine with dual-regime P&L, and a live CLOB execution layer behind a nine-gate risk manager and circuit breaker. Its `DECISIONS.md` records three diagnosed failures. | [repo](https://github.com/matteoccll/Armed_Intelbot) · [spec](software/polymarket-trading-bot/spec.md) |
-| **AP Outreach Agent** | Claude Code-orchestrated six-component pipeline for autonomous job-application outreach across NHS Trusts, private practices, and third-sector organisations. Design spec only — not implemented. | [spec](software/ap_outreach_agent_spec/ap_outreach_agent_spec.md) |
+| **BiasMiti** | Manifest V3 browser extension implementing four cognitive-debiasing mechanisms (base-rate neglect, anchoring) entirely client-side — no LLM, no network. Grounded in the cognitive-psychology literature. 86 passing tests; demo recorded on live Wikipedia. | [repo](https://github.com/matteoccll/BiasMiti_Extension) · [manual](software/biasmiti/reference_manual.md) |
+| **Polymarket Scanner** | Data pipeline. Python CLI that fetches the full Polymarket catalog via the Gamma API and filters it to tractable markets through a six-stage pipeline with a deduplicated rejection-audit cache. 53 tests. | [repo](https://github.com/matteoccll/Polymarket_Scanner) · [spec](software/polymarket-scanner/spec.md) |
+| **Armed Intelbot** | Three-mode systems project: topic-filtered on-chain WebSocket monitoring, a paper-simulator engine with dual-regime P&L, and a live CLOB execution layer behind a nine-gate risk manager and circuit breaker. Its `DECISIONS.md` records three diagnosed failures. | [repo](https://github.com/matteoccll/Armed_Intelbot) · [spec](software/armed-intelbot/spec.md) |
+| **AP Outreach Agent** | Claude Code-orchestrated six-component pipeline for autonomous job-application outreach across NHS Trusts, private practices, and third-sector organisations. Design spec only — not implemented. | [spec](software/ap-outreach-agent/spec.md) |
 
 ---
 
