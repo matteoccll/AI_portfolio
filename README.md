@@ -36,8 +36,8 @@ codebase, **Source** the in-repo snapshot.
 
 | Project | What it is | Links |
 |---|---|---|
+| **Two Little Giraffes** | Static multi-page site for an artisan gelato & café in Battersea — six pages served from one self-contained HTML file via hash-based vanilla-JS routing. Design-token CSS, three variable fonts, fluid `clamp()` type, and a data-driven flavour board rendered from inline JSON. No framework, no build step; accessibility via semantic landmarks, ARIA navigation state, and `prefers-reduced-motion`. Work in progress — placeholder content pending client sign-off, published with permission. | [live](https://matteoccll.github.io/twolittlegiraffes_website/) · [repo](https://github.com/matteoccll/twolittlegiraffes_website) · [source](websites/twolittlegiraffes/) |
 | **Indulj** | Static marketing site for a mobile massage therapy service. Design-token CSS, fluid `clamp()` typography, fully accessibility-compliant, no framework, no build step. Work in progress (~3 hours in, no prior web-development experience); content and copy are placeholders pending sign-off from the client. Published with the subject's knowledge and permission. | [live](https://matteoccll.github.io/indulj_website/) · [repo](https://github.com/matteoccll/indulj_website) · [source](websites/indulj/) |
-| **_New website — name TBD_** | _Placeholder — to be filled in on upload: description, stack, and status. Positioned as the flagship build._ | _live · repo · source — pending upload_ |
 
 ---
 
