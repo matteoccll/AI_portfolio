@@ -1,0 +1,1916 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Little Giraffes — Gelato (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=DM+Sans:opsz,wght@9..40,300..700&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   TWO LITTLE GIRAFFES — multi-page prototype
+   Pages: home · about · bike · art · contact
+   Brand: Pantone 7687C blue, Pantone 217C pink, cream
+   ========================================================= */
+
+:root{
+  --blue:        #234395;
+  --blue-deep:   #182f6b;
+  --blue-soft:   #5a6fb0;
+  --pink:        #EAB8E4;
+  --pink-soft:   #f4d6ef;
+  --pink-deep:   #d99cd1;
+  /* "Porcelain & Cobalt" surfaces — three light tiers, each ~10% step in warmth */
+  --cream:       #ffffff;          /* navbar / button text on blue — the lightest */
+  --cream-hero:  #fefcf5;          /* heroes & body — subtle warm */
+  --cream-soft:  #fdf9ee;          /* sub-heroes — slightly more cream */
+  --ink:         #1a1a2e;
+
+  --font-display: "Fraunces", serif;
+  --font-body:    "DM Sans", -apple-system, sans-serif;
+  --font-hand:    "Caveat", cursive;
+
+  --max:        1280px;
+  --gutter:     clamp(20px, 4vw, 56px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--cream);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.25  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x:hidden;
+}
+
+a{ color:inherit; text-decoration:none; }
+img,svg{ display:block; max-width:100%; }
+
+/* ---------- typography ---------- */
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+  font-weight: 400;
+  color: var(--blue);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+h1{ font-size: clamp(58px, 9vw, 132px); font-weight: 380; }
+h2{ font-size: clamp(30px, 4.8vw, 68px); line-height: .98; font-weight: 360; }
+h3{ font-size: clamp(24px, 2.4vw, 32px); font-weight: 460; }
+h4{ font-size: 18px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--font-body); color: var(--blue); }
+
+em.it, h3 em{
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+}
+h1 em, h2 em{
+  font-style: normal;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+}
+
+.eyebrow{
+  font-family: var(--font-body);
+  font-size: 24px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue);
+  opacity: .85;
+}
+.hand{
+  font-family: var(--font-hand);
+  font-weight: 600;
+  color: var(--blue);
+}
+
+p{ margin:0 0 1.1em; max-width: 60ch; }
+.wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+.ph-img{
+  background: var(--cream-soft);
+  border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  color: rgba(26,26,46,.35);
+  font-family: var(--font-hand);
+  font-size: 22px;
+  text-align:center;
+  padding: 24px;
+  position:relative;
+  overflow:hidden;
+  min-height: 220px;
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position: sticky; top:0; z-index: 50;
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  background: color-mix(in srgb, var(--pink) 92%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 12%, transparent);
+}
+.nav-inner{
+  display:flex; align-items:flex-start; justify-content: space-between;
+  height: 70px; padding: 22px var(--gutter) 0;
+  max-width: var(--max); margin: 0 auto;
+}
+.nav-logo{ height: 56px; cursor: pointer; flex-shrink: 0; }
+.nav-logo img{ height:100%; width:auto; }
+
+/* hamburger button */
+.nav-toggle{
+  display: flex; flex-direction: column; justify-content: space-between;
+  width: 34px; height: 24px;
+  background: none; border: none; cursor: pointer;
+  padding: 0;
+  position: absolute; right: calc(var(--gutter) + max(0px, (100vw - var(--max)) / 8)); top: 50%; transform: translateY(-50%);
+  z-index: 2;
+}
+.nav-toggle span{
+  display: block; width: 100%; height: 3px;
+  background: var(--blue);
+  border-radius: 2px;
+  transition: transform .3s ease, opacity .2s ease;
+  transform-origin: center;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(11px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-11px) rotate(-45deg); }
+
+/* dropdown panel */
+.nav-dropdown{
+  position: fixed;
+  top: calc(var(--nav-h, 101px) - 1px); right: 0; bottom: 0; left: auto;
+  width: 16.25vw;
+  background: color-mix(in srgb, var(--pink) 92%, transparent);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border-left: 1px solid color-mix(in srgb, var(--blue) 12%, transparent);
+  z-index: 49;
+  -webkit-mask-image: linear-gradient(to bottom, black 360px, rgba(0,0,0,.88) 52%, rgba(0,0,0,.6) 68%, rgba(0,0,0,.22) 84%, transparent 94%);
+  mask-image: linear-gradient(to bottom, black 360px, rgba(0,0,0,.88) 52%, rgba(0,0,0,.6) 68%, rgba(0,0,0,.22) 84%, transparent 94%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(6px);
+  transition: opacity .35s cubic-bezier(.2,.8,.2,1), transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.nav-dropdown.open{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+  /* lift above the navbar so its drop shadow (and 1px bottom border, which the
+     dropdown's top overlaps) are covered in this column — leaving one single,
+     uniform coat of pink that matches the navbar exactly. The rest of the
+     navbar keeps its shadow/border. */
+  z-index: 51;
+}
+.nav-links{
+  display: flex; flex-direction: column;
+  padding: 16px 20px 24px;
+  gap: 4px;
+}
+.nav-links a{
+  position: relative;
+  display: inline-block;
+  padding: 10px 0;
+  color: var(--blue);
+  font-size: clamp(13px, 1.44vw, 17px);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color .2s;
+  white-space: nowrap;
+}
+.nav-links a::after{
+  content:""; position:absolute; left:0; right:100%; bottom: 6px;
+  height: 2px; background: #fff;
+  transition: right .35s ease;
+}
+.nav-links a:hover::after,
+.nav-links a[aria-current="page"]::after{ right:0; }
+.nav-links a[aria-current="page"]{ color: var(--blue); }
+
+@media (max-width: 720px){
+  .nav-inner{ height: 50px; padding: 14px var(--gutter) 0; }
+  .nav-logo{ height: 44px; }
+  .nav-links a{ font-size: 13px; }
+}
+
+/* ---------- page system (single-file router) ---------- */
+[data-page]{ display: none; }
+[data-page][data-active]{ display: block; animation: pagefade .55s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes pagefade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- shared section primitives ---------- */
+section.s, .s-block{ padding: clamp(70px, 10vw, 130px) 0; position: relative; }
+.section-eyebrow{ display:flex; align-items:center; gap: 12px; margin-bottom: 24px; }
+.section-eyebrow .bar{ width: 36px; height: 2px; background: var(--pink-deep); }
+
+.divider{
+  display:block; margin: 0 auto;
+  width: clamp(120px, 16vw, 220px);
+  height: 22px;
+  color: var(--blue);
+  opacity: .55;
+}
+
+.btn{
+  display:inline-flex; align-items:center; gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  transition: transform .2s, background .2s, color .2s;
+  cursor: pointer; border: none;
+  font-family: var(--font-body);
+}
+.btn-primary{ background: var(--blue); color: var(--cream); }
+.btn-primary:hover{ background: var(--blue-deep); transform: translateY(-2px); }
+.btn-ghost{ background: var(--blue); color: var(--cream); }
+.btn-ghost:hover{ background: var(--blue-deep); transform: translateY(-2px); }
+.btn-pink{ background: var(--blue); color: var(--cream); }
+.btn-pink:hover{ background: var(--blue-deep); transform: translateY(-2px); }
+.btn-capture{ background: var(--pink); color: var(--blue-deep); font-size: 15px; font-weight: 600; letter-spacing: .04em; }
+.btn-capture:hover{ background: var(--cream); transform: translateY(-1px); }
+
+.scribble{
+  display:inline-block;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 18'><path d='M2 14 C 30 4, 70 18, 110 8 S 180 14, 198 6' fill='none' stroke='%23EAB8E4' stroke-width='8' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 0 90%;
+  background-size: 100% 14px;
+  padding-bottom: 6px;
+}
+
+/* ---------- HOME hero ---------- */
+.hero{ padding: clamp(70px, 10vw, 130px) 0; position: relative; overflow: hidden; }
+.hero-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
+.hero-logo{ width: 100%; max-width: 720px; }
+.hero-tagline{ display:flex; flex-direction:column; gap: 14px; max-width: 520px; }
+.hero-tagline p{
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 14, "SOFT" 100;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.32; color: var(--ink); margin: 0 0 24px;
+}
+.hero-ctas{ display:flex; flex-wrap:wrap; gap: 14px; }
+.hero-h1{
+  font-size: clamp(32px, 5.1vw, 72px);
+  line-height: .98;
+  margin: 0 0 18px;
+}
+.hero-h1 em{ color: var(--pink-deep); }
+.hero-sub{
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 14, "SOFT" 100;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.42;
+  color: var(--ink);
+  margin: 0 0 28px;
+  max-width: 46ch;
+}
+.hero-mark{ position: absolute; font-family: var(--font-hand); font-size: 22px; color: var(--blue); transform: rotate(-6deg); }
+.hero-mark.m1{ top: 16%; right: 8%; }
+.hero-mark.m1 .arrow{ display:inline-block; margin-left:6px; transform: rotate(28deg); }
+.giraffe-mar{ position:absolute; color: var(--blue); }
+.giraffe-mar svg{ width:100%; height:auto; }
+.giraffe-mar.g-hero{ width: 86px; bottom: 8%; left: -10px; transform: rotate(-8deg); opacity: .92; }
+
+/* ---------- WHAT WE OFFER ---------- */
+.offer{
+  background: var(--cream-soft);
+  border-top: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+}
+.offer-head{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+.offer-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+}
+.offer-card{
+  background: var(--cream);
+  border-radius: 22px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--blue) 12%, transparent);
+  display: flex; flex-direction: column; gap: 0;
+  transition: transform .3s, box-shadow .3s, background .3s;
+  position: relative;
+  min-height: 360px;
+}
+.offer-card[data-link]:hover,
+.offer-card[data-link]:focus{
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(35,67,149,.10);
+  background: var(--cream);
+  cursor: pointer;
+}
+.offer-card .card-img{ aspect-ratio:3/2; flex-shrink:0; padding:clamp(10px,1.2vw,14px); box-sizing:border-box; }
+.offer-card .card-img img{ width:90%; height:100%; object-fit:cover; display:block; border-radius:24px; overflow:hidden; margin:0 auto; }
+.offer-card .card-body{ padding:0 clamp(20px,2.4vw,28px) clamp(20px,2.4vw,28px); display:flex; flex-direction:column; gap:12px; flex:1; }
+.offer-card h3{
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 480;
+  line-height: 1.15;
+  margin: 0;
+}
+.offer-card p{
+  font-size: 14px; line-height: 1.55;
+  opacity: .82; margin: 0;
+  flex-grow: 1;
+}
+.offer-card .more{
+  font-size: 12px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--blue);
+  font-weight: 500; margin-top: 8px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.offer-card .more::after{ content: "→"; transition: transform .25s; }
+.offer-card[data-link]:hover .more::after{ transform: translateX(4px); }
+.offer-card.no-link .more{ opacity: .6; }
+.offer-card.no-link .more::after{ display: none; }
+
+@media (max-width: 1024px){ .offer-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px){ .offer-grid{ grid-template-columns: 1fr; } }
+
+/* ---------- flavour board ---------- */
+.flavours{ scroll-margin-top: 90px; }
+.flavours-head{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: end; margin-bottom: clamp(40px, 6vw, 60px); }
+.flavours-meta{
+  display:flex; flex-wrap: wrap; gap: 14px 24px;
+  align-items: center; padding: 14px 0;
+  border-top: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+  margin-bottom: 40px;
+  font-size: 13px; color: var(--blue);
+}
+.flavours-meta .dot{ width: 8px; height: 8px; border-radius: 50%; display: inline-block; vertical-align: middle; margin-right: 6px; }
+.dot.staple{ background: var(--blue); }
+.dot.seasonal{ background: var(--pink-deep); }
+
+.flavour-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(12px, 2vw, 20px); }
+.flavour-card{
+  background: var(--cream-soft);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  border: 1px solid color-mix(in srgb, var(--blue) 10%, transparent);
+  transition: transform .3s, box-shadow .3s;
+  position: relative;
+}
+.flavour-card:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px rgba(35,67,149,.08); }
+.flavour-card .swatch{
+  aspect-ratio: 9/10;
+  border-radius: 10px;
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-hand); font-size: 22px;
+  color: var(--blue);
+  position: relative;
+  overflow: hidden;
+}
+.flavour-card .swatch::before{
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
+}
+.flavour-card .swatch.swatch-empty{
+  background: var(--cream-soft);
+  color: var(--blue);
+  font-size: 0;
+}
+.flavour-card .swatch.swatch-empty::before{ display: none; }
+.flavour-card .swatch.swatch-photo{ background-size: 100% 100%; background-position: center; }
+.flavour-card .swatch.swatch-photo::before{ display: none; }
+
+.flavour-card .tag{
+  position: absolute; top: 28px; right: 28px;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px;
+  font-weight: 600;
+}
+.tag.staple{ background: var(--blue); color: var(--cream); }
+.tag.seasonal{ background: var(--pink-deep); color: var(--blue-deep); }
+.flavour-card h3{ font-size: 20px; line-height: 1.1; }
+.flavour-card .origin{ font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); opacity: .7; margin-bottom: 4px; display: block; }
+.flavour-card p{ font-size: 13px; margin: 0; line-height: 1.5; opacity: .85; }
+.flavour-card .icons{ display:flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.flavour-card .icons span{
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--blue) 25%, transparent);
+  color: var(--blue);
+}
+
+@media (max-width: 1100px){ .flavour-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px){ .flavour-grid{ grid-template-columns: 1fr; } }
+
+/* ---------- email capture ---------- */
+.capture{ background: var(--blue); color: var(--cream); position: relative; overflow: hidden; }
+.capture h2, .capture .eyebrow{ color: var(--cream); }
+.capture .eyebrow{ opacity: .7; }
+.capture-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
+.capture h2 em{ color: var(--pink); }
+.capture p{ opacity: .85; font-size: 19px; }
+.capture-form{
+  display:flex; gap: 8px; flex-wrap: wrap;
+  background: color-mix(in srgb, var(--cream) 10%, transparent);
+  padding: 8.8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--cream) 25%, transparent);
+  max-width: 520px;
+}
+.capture-form input{
+  flex: 1; min-width: 0;
+  background: transparent; border: none; outline: none;
+  color: var(--cream); font-family: var(--font-body); font-size: 17px;
+  padding: 13.2px 19.8px;
+}
+.capture-form input::placeholder{ color: color-mix(in srgb, var(--cream) 65%, transparent); }
+.capture-form button{
+  background: var(--pink); color: var(--blue-deep);
+  border: none; border-radius: 999px;
+  padding: 13.2px 24.2px; font-size: 15px; font-weight: 600;
+  letter-spacing: .04em;
+  cursor: pointer; transition: background .2s, transform .2s;
+  font-family: var(--font-body);
+}
+.capture-form button:hover{ background: var(--cream); transform: translateY(-1px); }
+.capture .hand{ color: var(--pink); }
+
+/* ---------- ABOUT page ---------- */
+.about-hero{
+  padding: clamp(20px, 2.5vw, 32px) 0;
+  min-height: calc(100svh - 80px);
+  display: flex; align-items: center;
+}
+.about-hero-grid{
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+  width: 100%;
+}
+.about-hero-text{ display:flex; flex-direction:column; gap: 16px; }
+.about-hero h1{ font-size: clamp(32px, 5.1vw, 72px); line-height: .98; }
+.about-portrait{
+  aspect-ratio: 4/5;
+  max-height: calc(100svh - 160px);
+  border-radius: 200px 200px 24px 24px;
+  overflow: hidden;
+}
+.about-body{
+  padding: clamp(40px, 5vw, 64px) 0;
+  background: var(--cream-soft);
+  border-top: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+}
+.about-cols{ display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(28px, 5vw, 80px); }
+.about-dramatic p.dramatic:first-child{ margin-top: 0; }
+.about-text p{ font-size: 17px; line-height: 1.7; margin-bottom: 1.4em; }
+.about-text p:first-of-type::first-letter{
+  font-family: var(--font-display); font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-size: 4.2em; line-height: .85; float: left;
+  color: var(--blue); padding: 8px 12px 0 0;
+}
+.about-dramatic{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+p.dramatic{
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 80;
+  font-style: italic;
+  font-weight: 380;
+  color: var(--blue);
+  font-size: clamp(32px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 1.4em 0 .6em;
+  max-width: none;
+}
+p.dramatic.final{
+  margin-top: .2em;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+  position: relative;
+}
+p.dramatic.final::after{
+  content: "";
+  display: block;
+  width: 72px;
+  height: 6px;
+  background: var(--pink-deep);
+  border-radius: 6px;
+  margin-top: 28px;
+}
+/* ---------- ABOUT: Inside the shop (Piece 2) ---------- */
+.inside{
+  padding: clamp(60px, 8vw, 110px) 0 104px;
+  position: relative;
+  isolation: isolate;
+}
+.inside::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('img/inside-bg.jpg') center / cover no-repeat;
+  opacity: .88;
+  mask-image: linear-gradient(to right,
+    black 0%,
+    black                  calc(50% - 720px),
+    rgba(0,0,0,.72)        calc(50% - 678px),
+    rgba(0,0,0,.49)        calc(50% - 636px),
+    rgba(0,0,0,.25)        calc(50% - 580px),
+    rgba(0,0,0,.09)        calc(50% - 524px),
+    rgba(0,0,0,.02)        calc(50% - 482px),
+    transparent            calc(50% - 440px),
+    transparent            calc(50% + 440px),
+    rgba(0,0,0,.02)        calc(50% + 482px),
+    rgba(0,0,0,.09)        calc(50% + 524px),
+    rgba(0,0,0,.25)        calc(50% + 580px),
+    rgba(0,0,0,.49)        calc(50% + 636px),
+    rgba(0,0,0,.72)        calc(50% + 678px),
+    black                  calc(50% + 720px),
+    black 100%
+  );
+  -webkit-mask-image: linear-gradient(to right,
+    black 0%,
+    black                  calc(50% - 720px),
+    rgba(0,0,0,.72)        calc(50% - 678px),
+    rgba(0,0,0,.49)        calc(50% - 636px),
+    rgba(0,0,0,.25)        calc(50% - 580px),
+    rgba(0,0,0,.09)        calc(50% - 524px),
+    rgba(0,0,0,.02)        calc(50% - 482px),
+    transparent            calc(50% - 440px),
+    transparent            calc(50% + 440px),
+    rgba(0,0,0,.02)        calc(50% + 482px),
+    rgba(0,0,0,.09)        calc(50% + 524px),
+    rgba(0,0,0,.25)        calc(50% + 580px),
+    rgba(0,0,0,.49)        calc(50% + 636px),
+    rgba(0,0,0,.72)        calc(50% + 678px),
+    black                  calc(50% + 720px),
+    black 100%
+  );
+  pointer-events: none;
+}
+@media (max-width: 1200px){ .inside::before{ display: none; } }
+.inside-head{
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 5vw, 64px);
+  text-align: center;
+}
+.inside-head .section-eyebrow{ justify-content: center; }
+.inside-head h2 em{ font-variation-settings: "opsz" 144, "SOFT" 100; color: var(--pink-deep); }
+.inside-body{
+  max-width: 640px;
+  margin: 0 auto;
+}
+.inside-body p{
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 1.3em;
+  color: var(--ink);
+  max-width: none;
+}
+.pullquote{
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 80;
+  font-style: italic;
+  font-weight: 380;
+  color: var(--blue);
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.2;
+  text-align: center;
+  margin: 2.4em auto;
+  padding: 1.2em 0;
+  max-width: 22ch;
+  border-top: 1px solid color-mix(in srgb, var(--pink-deep) 60%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--pink-deep) 60%, transparent);
+  position: relative;
+}
+.pullquote::before, .pullquote::after{
+  content: "";
+  position: absolute;
+  width: 8px; height: 8px;
+  background: var(--pink-deep);
+  border-radius: 50%;
+  left: 50%; transform: translateX(-50%);
+}
+.pullquote::before{ top: -4px; }
+.pullquote::after{ bottom: -4px; }
+.giraffe-pair{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 0.5em;
+}
+.giraffe-pair svg{ display: block; }
+.inside-body .closing{
+  font-family: var(--font-hand);
+  color: var(--blue);
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.05;
+  text-align: center;
+  margin-top: 36px;
+  margin-bottom: 0;
+}
+@media (max-width: 900px){
+  .about-cols, .about-hero-grid{ grid-template-columns: 1fr; }
+}
+
+/* ---------- BIKE page ---------- */
+.bike-hero{
+  padding: clamp(20px, 2.5vw, 32px) 0;
+  position: relative; overflow: hidden;
+  min-height: calc(100svh - 80px);
+  display: flex; align-items: center;
+}
+.bike-hero-grid{ display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(24px, 4vw, 64px); align-items: center; width: 100%; }
+.bike-hero h1{ font-size: clamp(32px, 5.1vw, 72px); line-height: .98; }
+.bike-hero h1 em{ color: var(--pink-deep); }
+.bike-hero .lead{
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 14, "SOFT" 100;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.42;
+  margin-top: 24px;
+  max-width: 46ch;
+}
+.bike-stats{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+.bike-stats .stat .n{
+  font-family: var(--font-display); font-variation-settings: "opsz" 144, "SOFT" 50;
+  font-size: clamp(38px, 5vw, 60px); color: var(--blue); line-height: 1;
+}
+.bike-stats .stat .l{ font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--blue); opacity: .75; margin-top: 8px; display:block; }
+
+.bike-img{ aspect-ratio: 4/5; max-height: calc(100svh - 160px); border-radius: 24px; overflow: hidden; }
+
+.bike-mission{
+  background: var(--blue); color: var(--cream);
+  padding: clamp(60px, 8vw, 110px) 0;
+}
+.bike-mission h2{ color: var(--cream); }
+.bike-mission h2 em{ color: var(--pink); }
+.mission-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 100px); }
+.mission-grid p{ font-size: 17px; opacity: .85; }
+.mission-points{ list-style:none; padding:0; margin: 28px 0 0; display:flex; flex-direction:column; gap: 14px; }
+.mission-points li{ display:flex; gap: 14px; }
+.mission-points li::before{ content: "✓"; color: var(--pink); font-size: 22px; line-height: 1; }
+
+.events{
+  padding: clamp(60px, 8vw, 110px) 0;
+}
+.events-list{ display: flex; flex-direction: column; }
+.event-row{
+  display: grid;
+  grid-template-columns: 100px 1fr 200px auto;
+  gap: 24px;
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+}
+.event-row:first-of-type{ border-top: 1px solid color-mix(in srgb, var(--blue) 18%, transparent); }
+.event-row .date{
+  font-family: var(--font-display); font-variation-settings: "opsz" 144, "SOFT" 50;
+  font-size: 28px; color: var(--blue); line-height: 1;
+}
+.event-row .date small{ display:block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity:.7; margin-top: 4px; font-family: var(--font-body); }
+.event-row h4{ margin: 0 0 4px; font-size: 18px; text-transform: none; letter-spacing: 0; font-family: var(--font-display); font-weight: 480; font-size: 22px; color: var(--blue); }
+.event-row .where{ font-size: 14px; opacity:.7; }
+.event-row .status{ font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; font-weight: 600; text-align: center; }
+.status.upcoming{ background: var(--pink); color: var(--blue-deep); }
+.status.past{ background: transparent; color: var(--blue); opacity: .55; border: 1px solid color-mix(in srgb, var(--blue) 30%, transparent); }
+@media (max-width: 720px){ .event-row{ grid-template-columns: 1fr; gap: 8px; } .event-row .status{ justify-self: start; } .bike-stats{ grid-template-columns: 1fr; } .bike-hero-grid, .mission-grid{ grid-template-columns: 1fr; } }
+
+.booking{ background: var(--pink-soft); padding: clamp(60px, 8vw, 110px) 0; }
+.booking-grid{ display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 80px); }
+.booking h2 em{ color: var(--blue-deep); }
+.form-card{
+  background: var(--cream-soft);
+  border-radius: 24px;
+  padding: clamp(24px, 3vw, 36px);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  border: 1px solid color-mix(in srgb, var(--blue) 10%, transparent);
+}
+.form-card .full{ grid-column: 1 / -1; }
+.form-card label{ display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; font-weight: 500; }
+.form-card input, .form-card textarea, .form-card select{
+  width: 100%; background: var(--cream);
+  border: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--font-body); font-size: 14px; color: var(--ink);
+  outline: none; transition: border-color .2s;
+}
+.form-card input:focus, .form-card textarea:focus, .form-card select:focus{ border-color: var(--blue); }
+.form-card textarea{ min-height: 100px; resize: vertical; }
+@media (max-width: 700px){ .form-card{ grid-template-columns: 1fr; } .booking-grid{ grid-template-columns: 1fr; } }
+
+/* ---------- ART page ---------- */
+.art-hero{ padding: clamp(70px, 10vw, 130px) 0; }
+.art-hero h1{ font-size: clamp(32px, 5.1vw, 72px); line-height: .98; }
+.art-hero h1 em{ color: var(--pink-deep); }
+.art-hero .lead{ font-family: var(--font-display); font-size: clamp(18px, 1.7vw, 22px); line-height: 1.42; margin-top: 24px; max-width: 46ch; }
+
+.current-show{
+  padding: clamp(40px, 6vw, 80px) 0;
+  background: var(--cream-soft);
+  border-top: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+}
+.show-grid{ display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
+.show-img{ aspect-ratio: 4/5; border-radius: 18px; }
+.show-meta{ display: flex; flex-direction: column; gap: 12px; }
+.show-meta .when{ font-family: var(--font-hand); font-size: 30px; color: var(--blue); margin-bottom: 4px; }
+.show-meta h2 em{ color: var(--pink-deep); }
+.show-meta p{ font-size: 16px; opacity: .85; }
+
+.archive{ padding: clamp(60px, 8vw, 110px) 0; }
+.archive-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 32px); }
+.archive-card{ display: flex; flex-direction: column; gap: 14px; }
+.archive-card .ph-img{ aspect-ratio: 1; min-height: 0; }
+.archive-card .when{ font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); opacity: .75; }
+.archive-card h4{ font-family: var(--font-display); text-transform: none; letter-spacing: 0; font-weight: 460; font-size: 22px; color: var(--blue); }
+.archive-card p{ font-size: 14px; opacity: .8; margin: 0; }
+@media (max-width: 880px){ .archive-grid{ grid-template-columns: 1fr 1fr; } .show-grid{ grid-template-columns: 1fr; } }
+@media (max-width: 560px){ .archive-grid{ grid-template-columns: 1fr; } }
+
+.artist-apply{
+  background: var(--blue); color: var(--cream);
+  padding: clamp(50px, 7vw, 90px) 0;
+}
+.artist-apply h2{ color: var(--cream); }
+.artist-apply h2 em{ color: var(--pink); }
+.apply-grid{ display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
+.apply-grid p{ opacity: .85; max-width: 50ch; }
+
+/* ---------- CONTACT page ---------- */
+.contact-hero{ padding: clamp(70px, 10vw, 130px) 0; }
+.contact-hero h1{ font-size: clamp(32px, 5.1vw, 72px); line-height: .98; }
+.contact-hero h1 em{ color: var(--pink-deep); }
+.contact-body{ padding: clamp(60px, 8vw, 110px) 0; background: var(--pink-soft); border-top: 1px solid color-mix(in srgb, var(--blue) 8%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--blue) 8%, transparent); }
+.contact-grid{ display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(30px, 5vw, 80px); align-items: stretch; }
+.contact-info{ display: flex; flex-direction: column; gap: 28px; justify-content: space-between; }
+.info-block h4{ margin-bottom: 12px; }
+.info-block p{ margin: 0; font-size: 17px; line-height: 1.6; }
+.contact-info a{ color: var(--ink); transition: color .2s; }
+.contact-info a:hover{ color: var(--blue); }
+.hours{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap: 6px; }
+.hours li{ display:flex; justify-content: space-between; font-size: 16px; padding: 4px 0; border-bottom: 1px dashed color-mix(in srgb, var(--blue) 20%, transparent); }
+.hours li:last-child{ border-bottom: none; }
+.hours .day{ font-weight: 500; color: var(--ink); }
+.map-wrap{ aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; background: var(--cream-soft); }
+.map-wrap iframe{ min-height: 100%; height: 100%; }
+
+.faq{
+  padding: clamp(60px, 8vw, 110px) 0;
+  background: var(--cream-soft);
+  border-top: 1px solid color-mix(in srgb, var(--blue) 8%, transparent);
+}
+.faq h2{ margin-bottom: 36px; }
+.faq h2 em{ color: var(--pink-deep); }
+.faq-list{ max-width: 820px; margin: 0 auto; }
+.faq-item{
+  border-top: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+}
+.faq-item:last-of-type{ border-bottom: 1px solid color-mix(in srgb, var(--blue) 18%, transparent); }
+.faq-item summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 0;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  font-family: var(--font-display); font-size: clamp(18px, 2vw, 24px); color: var(--blue);
+  font-weight: 460;
+}
+.faq-item summary::-webkit-details-marker{ display: none; }
+.faq-item summary::after{
+  content: "+"; font-family: var(--font-body);
+  font-size: 28px; color: var(--blue); transition: transform .25s;
+  line-height: 1;
+}
+.faq-item[open] summary::after{ transform: rotate(45deg); }
+.faq-item .ans{ padding: 0 0 22px; max-width: 70ch; opacity: .85; font-size: 16px; }
+
+/* ---------- FOOTER ---------- */
+footer{ background: var(--blue-deep); padding: clamp(48px, 6.4vw, 80px) 0 32px; color: var(--cream); }
+.foot-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 45px; }
+.foot-grid h4{ font-size: 19px; color: var(--cream); opacity: .9; padding-bottom: 10px; border-bottom: 1.5px solid rgba(255,255,255,.45); margin-bottom: 22px; }
+.foot-grid ul{ list-style: none; padding:0; margin:0; display:flex; flex-direction:column; gap: 14px; }
+.foot-grid a{ font-size: 17px; transition: color .2s; cursor: pointer; opacity: .85; }
+.foot-grid a:hover{ color: var(--pink); opacity: 1; }
+.foot-logo img{ height: 56px; width:auto; margin-bottom: 14px; }
+.foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size: 12px; opacity:.7; padding-top: 19px; border-top: 1px solid color-mix(in srgb, var(--cream) 22%, transparent); flex-wrap: wrap; gap: 12px; }
+@media (max-width: 700px){ .foot-grid{ grid-template-columns: 1fr 1fr; } .foot-logo{ grid-column: 1 / -1; } }
+
+@media (max-width: 980px){
+  .hero-grid, .flavours-head, .capture-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- MENU page ---------- */
+.menu-hero{ padding: clamp(70px, 10vw, 130px) 0; }
+.menu-hero h1{ font-size: clamp(32px, 5.1vw, 72px); line-height: .98; }
+.menu-hero h1 em{ color: var(--pink-deep); }
+.menu-hero .lead{
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 14, "SOFT" 100;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.42;
+  margin-top: 20px; max-width: 46ch;
+}
+.menu-board{ padding: clamp(60px, 8vw, 100px) 0; background: var(--cream-soft); border-top: 1px solid color-mix(in srgb, var(--blue) 8%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--blue) 8%, transparent); }
+.menu-board .wrap{ display:flex; flex-direction:column; align-items:center; gap: 36px; }
+.menu-img-wrap{
+  width: 100%; max-width: 880px;
+  position: relative;
+}
+.menu-img-wrap::before{
+  /* a faint pink frame echoing the menu's own card styling */
+  content:""; position:absolute; inset: -10px;
+  border-radius: 24px;
+  background: var(--pink-soft);
+  z-index: 0;
+  transform: rotate(-0.6deg);
+}
+.menu-img-wrap img{
+  position: relative; z-index: 1;
+  width: 100%; height: auto;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(35,67,149,.22), 0 4px 14px rgba(35,67,149,.10);
+  display: block;
+}
+.menu-actions{ display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.menu-info{
+  padding: clamp(50px, 7vw, 90px) 0;
+}
+.menu-info-grid{
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 60px);
+}
+.menu-info-grid h4{ margin-bottom: 10px; }
+.menu-info-grid p{ font-size: 15px; margin: 0; }
+.menu-info-grid .hand{ font-size: 22px; }
+@media (max-width: 820px){ .menu-info-grid{ grid-template-columns: 1fr; } }
+
+/* ---------- widget logo (square brand mark) ---------- */
+.widget-mark{
+  display:block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 52px rgba(0,0,0,.38);
+}
+.widget-mark img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* email-capture: now 3 columns when widget present */
+.capture-grid.with-widget{
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.capture .widget-mark{
+  max-width: 360px;
+  margin-left: auto;
+  transform: rotate(2deg);
+  transition: transform .5s;
+}
+.capture .widget-mark:hover{ transform: rotate(0deg) scale(1.02); }
+@media (max-width: 980px){
+  .capture .widget-mark{ margin: 0 auto; transform: rotate(0); max-width: 320px; }
+}
+
+
+@media (prefers-reduced-motion: reduce){
+  [data-page][data-active]{ animation: none; }
+  html{ scroll-behavior: auto; }
+}
+
+/* =========================================================
+   THEME OVERRIDE — Version 11 · "Linen, Cobalt & Coral"
+   Warm Italian-linen canvas (not Scandinavian beige). Cobalt
+   blue carries the dramatic punctuation — feature boxes and
+   footer. Pink graduates from thin accent to a recurring rhythm,
+   with one bold coral moment per page where it earns the room.
+   ========================================================= */
+:root{
+  --v11-porcelain:  #fefaee;   /* navbar — near-white warm porcelain, floats above linen */
+  --v11-linen:      #f1e6c8;   /* body / heroes (the canvas) */
+  --v11-parchment:  #f5ecd3;   /* first sub-heroes — subtle warm cream (swatch A) */
+  --v11-pearl:      #ece3d0;   /* alt sub-heroes — cooler eggshell, breaks the yellow stack */
+  --v11-coral:      #f0b9b0;   /* warm dusty coral */
+  --v11-coral-soft: #f5cfc8;   /* softer coral (highlight sections) */
+}
+
+/* nav — pink tint, v11 shadow preserved */
+.nav{
+  background: color-mix(in srgb, var(--pink) 92%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--pink-deep) 60%, transparent);
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--blue-deep) 30%, transparent),
+              0 2px 6px -2px color-mix(in srgb, var(--blue-deep) 14%, transparent);
+}
+
+/* body / heroes — warm linen */
+body{ background: var(--v11-linen); }
+.hero, .menu-hero, .about-hero, .bike-hero, .art-hero, .contact-hero{
+  background: var(--v11-porcelain);
+}
+
+/* sub-heroes — linen / paper alternation, with coral highlight moments */
+.offer        { background: var(--v11-parchment); }
+.flavours     { background: var(--v11-porcelain); }
+#flavours-bike-anchor { background: var(--v11-linen) !important; }
+.events       { background: var(--v11-porcelain); }
+.menu-board   { background: var(--v11-parchment); }
+.about-body   { background: var(--v11-parchment); }
+.inside       { background: var(--v11-porcelain); }
+.current-show { background: var(--v11-parchment); }   /* coral moment — current exhibition */
+.contact-body { background: var(--v11-parchment); }
+.faq          { background: var(--v11-porcelain); }
+
+/* feature sub-heroes — full brand cobalt (dramatic punctuation) */
+.capture, .bike-mission, .artist-apply{ background: #294cab; }
+
+/* footer — deep cobalt, the closing chord */
+footer{ background: var(--blue-deep); color: var(--cream); }
+.foot-grid h4{
+  color: var(--cream);
+  border-bottom-color: color-mix(in srgb, var(--cream) 30%, transparent);
+  opacity: 1;
+}
+.foot-grid a{ color: var(--cream); opacity: .85; }
+.foot-grid a:hover{ color: var(--pink); opacity: 1; }
+.foot-bottom{
+  border-top-color: color-mix(in srgb, var(--cream) 22%, transparent);
+  color: var(--cream); opacity: .75;
+}
+.foot-meta{ display:flex; align-items:center; gap: 0; }
+.foot-meta > * + *::before{ content:"·"; padding: 0 10px; color:#fff; font-size: 3em; line-height: 0; vertical-align: middle; }
+.foot-meta a{ color: var(--cream); opacity: .85; }
+.foot-meta a:hover{ color: var(--pink); opacity: 1; }
+
+/* stronger pink rhythm — eyebrow bars + italic highlights */
+.section-eyebrow .bar{
+  width: 52px; height: 3px;
+  background: var(--pink-deep);
+}
+h1 em, h2 em{
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20400%20100%27%20preserveAspectRatio%3D%27none%27%3E%3Cdefs%3E%3Cfilter%20id%3D%27b%27%20x%3D%27-12%25%27%20y%3D%27-20%25%27%20width%3D%27124%25%27%20height%3D%27160%25%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%270.015%200.1%27%20numOctaves%3D%272%27%20seed%3D%278%27%20result%3D%27n%27%2F%3E%3CfeDisplacementMap%20in%3D%27SourceGraphic%27%20in2%3D%27n%27%20scale%3D%277%27%20xChannelSelector%3D%27R%27%20yChannelSelector%3D%27G%27%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Cg%20opacity%3D%270.85%27%20filter%3D%27url%28%23b%29%27%3E%3Cpath%20d%3D%27M6%2C74%20C100%2C72.5%20240%2C75.5%20388%2C74%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.55%27%2F%3E%3Cpath%20d%3D%27M3%2C77%20C100%2C75.5%20240%2C78.5%20396%2C77%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.9%27%2F%3E%3Cpath%20d%3D%27M10%2C80%20C100%2C78.5%20240%2C81.5%20380%2C80%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.7%27%2F%3E%3Cpath%20d%3D%27M4%2C82.5%20C100%2C81.0%20240%2C84.0%20394%2C82.5%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%271.0%27%2F%3E%3Cpath%20d%3D%27M7%2C85%20C100%2C83.5%20240%2C86.5%20390%2C85%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.85%27%2F%3E%3Cpath%20d%3D%27M14%2C87.5%20C100%2C86.0%20240%2C89.0%20372%2C87.5%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.6%27%2F%3E%3Cpath%20d%3D%27M3%2C90%20C100%2C88.5%20240%2C91.5%20397%2C90%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%271.0%27%2F%3E%3Cpath%20d%3D%27M9%2C92.5%20C100%2C91.0%20240%2C94.0%20384%2C92.5%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.75%27%2F%3E%3Cpath%20d%3D%27M18%2C95%20C100%2C93.5%20240%2C96.5%20366%2C95%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.5%27%2F%3E%3Cpath%20d%3D%27M5%2C97.5%20C100%2C96.0%20240%2C99.0%20392%2C97.5%27%20fill%3D%27none%27%20stroke%3D%27%23EAB8E4%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.8%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 .04em;
+}
+/* keep highlight off the dark-on-blue feature boxes (would clash) */
+.capture h2 em, .bike-mission h2 em, .artist-apply h2 em{ background: none; padding: 0; }
+
+/* card depth — soft warm shadow so cards lift off coral and sand grounds */
+.offer-card, .flavour-card, .archive-card{
+  box-shadow: 0 12px 28px -8px color-mix(in srgb, var(--blue-deep) 18%, transparent),
+              0 2px 6px color-mix(in srgb, var(--blue-deep) 8%, transparent);
+}
+.offer-card[data-link]:hover,
+.offer-card[data-link]:focus,
+.flavour-card:hover{
+  box-shadow: 0 18px 38px -8px color-mix(in srgb, var(--blue-deep) 24%, transparent),
+              0 3px 10px color-mix(in srgb, var(--blue-deep) 12%, transparent);
+}
+</style>
+</head>
+<body>
+
+<!-- ======= NAV ======= -->
+<nav class="nav" id="site-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" data-link="home" aria-label="Two Little Giraffes home">
+      <img src="img/logo.png" alt="Two Little Giraffes">
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-dropdown" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  </div>
+</nav>
+<div class="nav-dropdown" id="nav-dropdown">
+  <div class="nav-links">
+    <a data-link="home">Home</a>
+    <a data-link="menu">Menu</a>
+    <a data-link="about">About us</a>
+    <a data-link="bike">Gelato bike</a>
+    <a data-link="art">Art</a>
+    <a data-link="contact">Contact &amp; FAQ</a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ====================  PAGE: HOME  ========================== -->
+<!-- ============================================================ -->
+<main data-page="home">
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <img class="hero-logo" src="img/logo.png" alt="Two Little Giraffes">
+        </div>
+        <div class="hero-tagline">
+          <h1 class="hero-h1">Battersea's <em>Best Kept Secret.</em></h1>
+          <p class="hero-sub">Authentic handcrafted Italian gelato made fresh every morning by Niko, hidden in the heart of Nine Elms, opposite the iconic Battersea Power Station.</p>
+          <div class="hero-ctas">
+            <a href="#flavours-anchor" class="btn btn-ghost">See today's flavours</a>
+            <a data-link="contact" class="btn btn-primary">Find Us <span aria-hidden="true">📍</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- what we offer -->
+  <section class="s offer">
+    <div class="wrap">
+
+      <div class="offer-head">
+        <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">What we offer</span></div>
+        <h2>Everything you need in <em>one little shop.</em></h2>
+      </div>
+
+      <div class="offer-grid">
+
+        <a class="offer-card" data-link="menu" tabindex="0">
+          <div class="card-img">
+            <img src="img/offer-menu.jpg" alt="Close-up of a latte with leaf art" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Specialty Coffee</h3>
+            <p>From flat whites to our legendary signature gelato latte.</p>
+            <span class="more">See the menu</span>
+          </div>
+        </a>
+
+        <a class="offer-card" data-link="art" tabindex="0">
+          <div class="card-img">
+            <img src="img/offer-art.jpg" alt="White gallery wall with framed artworks" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Free Art Exhibitions</h3>
+            <p>A free monthly exhibition showcasing local artists right here in Battersea.</p>
+            <span class="more">This month's show</span>
+          </div>
+        </a>
+
+        <a class="offer-card" data-link="bike" tabindex="0">
+          <div class="card-img">
+            <img src="img/offer-bike.jpg" alt="The gelato bike at an event" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Gelato Bike</h3>
+            <p>Fresh handcrafted gelato delivered to your community. Green, clean, emissions free.</p>
+            <span class="more">Book the bike</span>
+          </div>
+        </a>
+
+        <div class="offer-card no-link">
+          <div class="card-img">
+            <img src="img/offer-cafe.jpg" alt="Wooden shelf stocked with artisan food jars" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Artisan Local Goods</h3>
+            <p>Handpicked produce from local independent businesses. Community at our core.</p>
+            <span class="more">In store only</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- flavours store sub-hero -->
+  <section class="s flavours" id="flavours-anchor">
+    <div class="wrap">
+
+      <div class="flavours-head">
+        <div>
+          <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Today on the counter</span></div>
+          <h2>Eight flavours.<br>All <em>rotate.</em></h2>
+        </div>
+        <p>Niko sources fresh — lemons from Sicily in summer, pistachios from Bronte, hazelnuts from Piedmont. When the fruit isn't in season, the flavour isn't on the counter. It's that simple.</p>
+      </div>
+
+      <div class="flavours-meta">
+        <span style="margin-left:auto; opacity:.7;" id="flavours-updated"></span>
+      </div>
+
+      <div class="flavour-grid" id="flavour-grid">
+        <!-- rendered by JS from the flavours JSON below -->
+      </div>
+
+    </div>
+  </section>
+  <!-- email capture -->
+  <section class="s capture" id="join-us-anchor">
+    <div class="wrap capture-grid with-widget">
+      <div>
+        <span class="eyebrow">Join us</span>
+        <h2 style="margin-top: 16px;">Join the Two Little Giraffes <em>community.</em></h2>
+        <p style="margin-top: 20px;">Sign up today and get 10% off your first gelato in store.</p>
+        <form class="capture-form" style="margin-top: 20px;" onsubmit="event.preventDefault(); alert('Demo only — connect Mailchimp/Buttondown at go-live');">
+          <input type="email" placeholder="Enter your email address" required>
+          <button type="submit">Claim My 10% Off</button>
+        </form>
+        <p style="font-size: 14px; opacity: .7; margin-top: 16px; max-width: 44ch;">
+          No spam — just gelato news, community updates and a little love from Battersea.
+        </p>
+      </div>
+      <div>
+        <div class="widget-mark" aria-hidden="true">
+          <img src="img/widget-mark.jpg" alt="Two Little Giraffes — café · gelato">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- teasers for bike + art removed — replaced by 'What We Offer' section above -->
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ====================  PAGE: MENU  ========================== -->
+<!-- ============================================================ -->
+<main data-page="menu">
+
+  <section class="menu-hero">
+    <div class="wrap">
+      <span class="eyebrow">Café · gelato</span>
+      <h1 style="margin-top: 12px;">The <em>menu.</em></h1>
+      <p class="lead">Drinks, sourdough toasties, lasagna, gelato, pastries, retail — made fresh, served all day at 184 Thessaly Road.</p>
+    </div>
+  </section>
+
+  <section class="menu-board">
+    <div class="wrap">
+      <div class="menu-img-wrap">
+        <img src="img/menu-board.jpg" alt="Two Little Giraffes full menu: drinks, sourdough toasties, lasagna, gelato, tiramisu, pastries and retail items.">
+      </div>
+      <div class="menu-actions">
+        <a href="img/menu-board.jpg" download="two-little-giraffes-menu.jpg" class="btn btn-primary">Download menu →</a>
+        <a data-link="contact" class="btn btn-ghost">Plan a visit</a>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ====================  PAGE: ABOUT  ========================= -->
+<!-- ============================================================ -->
+<main data-page="about">
+
+  <section class="about-hero">
+    <div class="wrap about-hero-grid">
+      <div class="about-portrait">
+        <img src="img/about-portrait.jpg" alt="Niko in the shop" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy">
+      </div>
+      <div class="about-hero-text">
+        <span class="eyebrow">Our story</span>
+        <h1>Every great story starts with a <em>dream.</em></h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-body">
+    <div class="wrap about-cols">
+      <div class="about-dramatic">
+        <p class="dramatic">He mastered it.</p>
+        <p class="dramatic final">And then he opened<br>Two Little Giraffes.</p>
+      </div>
+      <div class="about-text">
+        <p>
+          Niko left Rome with his partner, a suitcase full of dreams and an unshakeable belief that London was where their story was meant to be written.
+        </p>
+        <p>
+          Like so many who arrive in a new city, they started from scratch. No shortcuts. No safety net. Just two people determined to build something real through hard work and genuine belief.
+        </p>
+        <p>
+          Niko threw himself into the world of business. He found his feet, learned his craft and quietly built the foundation for something he truly believed in. It was during this time that his passion for authentic Italian gelato took hold. He went to work in a gelato shop. Not as a shortcut. Not as a stopgap. As a student. He showed up every morning and truly learned what it meant to make gelato the Italian way. With patience. With precision. With love for the craft above everything else.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="inside">
+    <div class="wrap">
+      <div class="inside-head">
+        <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Inside the shop</span></div>
+        <h2>Step through the door<br>and you will <em>feel it immediately.</em></h2>
+      </div>
+
+      <div class="inside-body">
+        <p>
+          The smell of fresh coffee and handcrafted gelato. Walls alive with the work of local community artists. Artisan goods carefully chosen from independent businesses lining the shelves. And Niko behind the counter, making everything from scratch the way he always has.
+        </p>
+        <p>
+          This is not just a café. It is a space where people come to slow down, connect, and feel genuinely welcome.
+        </p>
+        <p>
+          Every month we open our walls to a local artist. We give their work a home and our community something beautiful to discover. Always free. Always open. Always for everyone.
+        </p>
+        <p>
+          We stock handpicked artisan goods from local independent businesses, because we believe in communities that look after each other.
+        </p>
+        <p>
+          And at the heart of it all, Niko's gelato. Made fresh every single morning, with real ingredients, less processed sugar than conventional ice cream, and more natural flavour than anything you have tasted before.
+        </p>
+
+        <blockquote class="pullquote">
+          Two Little Giraffes is a safe space. A community hub. A little piece of Italy in the heart of Battersea.
+          <br><br>Come as you are.<br>Stay as long as you like.
+        </blockquote>
+
+        <p class="closing">Standing tall<br>for our Community<br><span class="giraffe-pair">
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+            <clipPath id="gclip">
+              <rect x="12" y="88" width="52" height="28" rx="14"/>
+              <polygon points="46,98 60,94 54,34 44,38"/>
+              <path d="M44 40 L42 24 L47 14 L60 16 L67 22 L66 28 L57 32 L49 38 Z"/>
+            </clipPath>
+            <symbol id="giraffe" viewBox="0 0 70 160">
+              <g fill="#E3A24E">
+                <rect x="16" y="110" width="6" height="40" rx="3"/>
+                <rect x="26" y="110" width="6" height="40" rx="3"/>
+                <rect x="42" y="110" width="6" height="40" rx="3"/>
+                <rect x="52" y="110" width="6" height="40" rx="3"/>
+              </g>
+              <g fill="#5E3D22">
+                <rect x="16" y="144" width="6" height="6" rx="2"/>
+                <rect x="26" y="144" width="6" height="6" rx="2"/>
+                <rect x="42" y="144" width="6" height="6" rx="2"/>
+                <rect x="52" y="144" width="6" height="6" rx="2"/>
+              </g>
+              <path d="M14 94 q -5 14 -2 26" stroke="#E3A24E" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="12" cy="121" r="3.5" fill="#5E3D22"/>
+              <rect x="12" y="88" width="52" height="28" rx="14" fill="#E3A24E"/>
+              <polygon points="46,98 60,94 54,34 44,38" fill="#E3A24E"/>
+              <path d="M44 40 L42 24 L47 14 L60 16 L67 22 L66 28 L57 32 L49 38 Z" fill="#E3A24E"/>
+              <g clip-path="url(#gclip)" fill="#EAB8E4">
+                <ellipse cx="26" cy="98" rx="5" ry="4"/>
+                <ellipse cx="40" cy="103" rx="5.5" ry="4.5"/>
+                <ellipse cx="53" cy="99" rx="4.5" ry="4"/>
+                <ellipse cx="33" cy="109" rx="4" ry="3.5"/>
+                <ellipse cx="19" cy="104" rx="3.5" ry="3"/>
+                <ellipse cx="50" cy="50" rx="4.2" ry="4"/>
+                <ellipse cx="49" cy="66" rx="4.2" ry="4"/>
+                <ellipse cx="51" cy="82" rx="4" ry="3.8"/>
+                <ellipse cx="52" cy="42" rx="3" ry="3"/>
+              </g>
+              <path d="M45 94 L44 48" stroke="#B06E2E" stroke-width="3" fill="none" stroke-linecap="round" opacity=".85"/>
+              <ellipse cx="39" cy="21" rx="6" ry="3" fill="#E3A24E" transform="rotate(-35 39 21)"/>
+              <line x1="48.5" y1="15" x2="46.5" y2="6" stroke="#E3A24E" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="46" cy="5" r="3" fill="#5E3D22"/>
+              <line x1="54" y1="15" x2="53" y2="6" stroke="#E3A24E" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="52.7" cy="5" r="3" fill="#5E3D22"/>
+              <circle cx="56" cy="22" r="1.7" fill="#5E3D22"/>
+            </symbol>
+          </defs></svg>
+          <svg width="36" height="82" role="img" aria-label="Two little giraffes standing tall"><use href="#giraffe"/></svg>
+          <svg width="36" height="82" aria-hidden="true" style="margin-left:10px;"><use href="#giraffe"/></svg>
+        </span></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ====================  PAGE: BIKE  ========================== -->
+<!-- ============================================================ -->
+<main data-page="bike">
+
+  <section class="bike-hero">
+    <div class="wrap bike-hero-grid">
+      <div>
+        <span class="eyebrow">The gelato bike</span>
+        <h1 style="margin-top: 12px;">Gelato, on wheels.<br><em>Zero emissions.</em></h1>
+        <p class="lead">An electric-powered gelato cart that brings the full gelateria experience to your event — silent, off-grid, and beautiful to look at.</p>
+
+        <div class="bike-stats">
+          <div class="stat">
+            <span class="n">0g</span>
+            <span class="l">CO₂ on site</span>
+          </div>
+          <div class="stat">
+            <span class="n">12h</span>
+            <span class="l">battery life</span>
+          </div>
+          <div class="stat">
+            <span class="n">500+</span>
+            <span class="l">scoops per event</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap: 14px; margin-top: 36px; flex-wrap: wrap;">
+          <a href="#booking-anchor" class="btn btn-primary">Check availability →</a>
+          <a href="#events-anchor" class="btn btn-ghost">Where we've been</a>
+        </div>
+      </div>
+      <div class="bike-img">
+        <img src="img/bike.jpg" alt="The gelato bike at an event" style="width:100%; height:100%; object-fit:cover; display:block;" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="bike-mission">
+    <div class="wrap mission-grid">
+      <div>
+        <span class="eyebrow" style="color: var(--pink); opacity:1;">Why we built it</span>
+        <h2 style="margin-top: 14px;">A gelato cart shouldn't <em>run on a generator.</em></h2>
+      </div>
+      <div>
+        <p>
+          Most mobile gelato carts run on a noisy diesel generator, or a freezer that defrosts halfway through the night. The POZZETTI doesn't. Built in Austria around a single lithium battery, it brings the gelateria with it — silent, clean, and good for a full day's service.
+        </p>
+        <ul class="mission-points">
+          <li><span>Ten hours off-grid on one overnight charge — motor, cooling and water all from the same battery.</span></li>
+          <li><span>A proper gelateria, on wheels — eight flavours on display, six in reserve, all held at gelato-counter temperature.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- flavours bike sub-hero -->
+  <section class="s flavours" id="flavours-bike-anchor" style="background: var(--cream-soft);">
+    <div class="wrap">
+
+      <div class="flavours-head">
+        <div>
+          <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Today on the counter</span></div>
+          <h2>Eight flavours.<br>All <em>rotate.</em></h2>
+        </div>
+        <p>Niko sources fresh — lemons from Sicily in summer, pistachios from Bronte, hazelnuts from Piedmont. When the fruit isn't in season, the flavour isn't on the counter. It's that simple.</p>
+      </div>
+
+      <div class="flavours-meta">
+        <span style="margin-left:auto; opacity:.7;" id="flavours-bike-updated"></span>
+      </div>
+
+      <div class="flavour-grid" id="flavours-bike-grid">
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-01.jpg');"></div>
+          <div>
+            <span class="origin">Lombardia, Italy</span>
+            <h3>Fior di latte</h3>
+          </div>
+          <p>The purest gelato — just milk, cream and sugar. Delicate, impossibly fresh and always here.</p>
+          <div class="icons"><span>Vegetarian</span><span>Gluten-free</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-02.jpg');"></div>
+          <div>
+            <span class="origin">Ecuador</span>
+            <h3>Cioccolato fondente</h3>
+          </div>
+          <p>78% single-origin dark chocolate with a deep, bitter-edged richness. Niko doesn't sweeten it to death.</p>
+          <div class="icons"><span>Vegetarian</span><span>Gluten-free</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-03.jpg');"></div>
+          <div>
+            <span class="origin">Campania, Italy</span>
+            <h3>Fragola & basilico</h3>
+          </div>
+          <p>Strawberry sorbetto with a thread of fresh basil. Bright, grassy and a little unexpected.</p>
+          <div class="icons"><span>Vegan</span><span>Dairy-free</span><span>Sorbetto</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-04.jpg');"></div>
+          <div>
+            <span class="origin">Sicily, Italy</span>
+            <h3>Limone di Sicilia</h3>
+          </div>
+          <p>Lemon sorbetto made with whole Sicilian lemons — rind included. Bracing, floral and addictive.</p>
+          <div class="icons"><span>Vegan</span><span>Dairy-free</span><span>Sorbetto</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-02.jpg');"></div>
+          <div>
+            <span class="origin">Ethiopia</span>
+            <h3>Caffè e cardamomo</h3>
+          </div>
+          <p>Espresso gelato with a warm cardamom finish. Made with beans from our neighbours at the Battersea roastery.</p>
+          <div class="icons"><span>Vegan</span><span>Dairy-free</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-01.jpg');"></div>
+          <div>
+            <span class="origin">Sicily, Italy</span>
+            <h3>Pistacchio di Bronte</h3>
+          </div>
+          <p>Bronte DOP pistachios — hand-harvested every two years. Earthy, intensely nutty, vivid natural green.</p>
+          <div class="icons"><span>Vegetarian</span><span>Gluten-free</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-04.jpg');"></div>
+          <div>
+            <span class="origin">Emilia-Romagna, Italy</span>
+            <h3>Melone estivo</h3>
+          </div>
+          <p>Cantaloupe from the Po Valley, picked at peak sweetness. Pure summer in a cup — delicate and fleeting.</p>
+          <div class="icons"><span>Vegetarian</span><span>Gluten-free</span></div>
+        </article>
+        <article class="flavour-card">
+          <div class="swatch swatch-photo" style="background-image:url('img/flavour-03.jpg');"></div>
+          <div>
+            <span class="origin">Provence, France</span>
+            <h3>Lampone & rosa</h3>
+          </div>
+          <p>Wild raspberry sorbetto with a hint of dried rose petal. Tart, fragrant and unmistakably summer.</p>
+          <div class="icons"><span>Vegan</span><span>Dairy-free</span></div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="events" id="events-anchor">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Where the bike has been</span></div>
+      <h2 style="margin-bottom: 48px;">Past and <em>upcoming events.</em></h2>
+
+      <div class="events-list">
+        <div class="event-row">
+          <div class="date">14 Jun<small>2026</small></div>
+          <div>
+            <h4>[Wedding — surname]</h4>
+            <span class="where">[Venue, location]</span>
+          </div>
+          <span class="where">Private event</span>
+          <span class="status upcoming">Upcoming</span>
+        </div>
+        <div class="event-row">
+          <div class="date">22 Jun<small>2026</small></div>
+          <div>
+            <h4>[Town summer festival]</h4>
+            <span class="where">[Main square, location]</span>
+          </div>
+          <span class="where">Open to public</span>
+          <span class="status upcoming">Upcoming</span>
+        </div>
+        <div class="event-row">
+          <div class="date">5 May<small>2026</small></div>
+          <div>
+            <h4>[Corporate launch — brand name]</h4>
+            <span class="where">[Venue, location]</span>
+          </div>
+          <span class="where">Private event</span>
+          <span class="status past">Past</span>
+        </div>
+        <div class="event-row">
+          <div class="date">12 Apr<small>2026</small></div>
+          <div>
+            <h4>[Birthday party]</h4>
+            <span class="where">[Location]</span>
+          </div>
+          <span class="where">Private event</span>
+          <span class="status past">Past</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ====================  PAGE: ART  =========================== -->
+<!-- ============================================================ -->
+<main data-page="art">
+
+  <section class="art-hero">
+    <div class="wrap">
+      <span class="eyebrow">Monthly art exhibitions</span>
+      <h1 style="margin-top: 14px; max-width: 14ch;">A new artist <em>every month.</em> Free, always.</h1>
+      <p class="lead">The walls of the gelateria belong to the community. Every month we show one local or visiting artist — paintings, photography, illustration, sculpture, anything that fits. No fee to exhibit, no fee to visit.</p>
+    </div>
+  </section>
+
+  <section class="current-show">
+    <div class="wrap show-grid">
+      <div class="show-img">
+        <img src="img/art-show.jpg" alt="Current exhibition artwork" style="width:100%; height:100%; object-fit:cover; display:block; border-radius:18px;" loading="lazy">
+      </div>
+      <div class="show-meta">
+        <span class="eyebrow">Currently showing</span>
+        <span class="when">1 — 31 [month, year]</span>
+        <h2><em>[Exhibition title]</em></h2>
+        <h3 style="font-size: 22px; opacity: .8;">by [Artist name]</h3>
+        <p>3–4 sentence artist statement or description of the work. Where they're from, what the show is about, what the family loves about it.</p>
+        <div style="display: flex; gap: 14px; margin-top: 16px;">
+          <a data-link="contact" class="btn btn-primary">Plan a visit →</a>
+          <a href="#" class="btn btn-ghost">Artist's website</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="archive">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Past shows</span></div>
+      <h2 style="margin-bottom: 48px;"><em>The archive.</em></h2>
+
+      <div class="archive-grid">
+        <article class="archive-card">
+          <img src="img/archive-01.jpg" alt="Past exhibition" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:14px; display:block;" loading="lazy">
+          <span class="when">March 2026</span>
+          <h4><span class="ph-inline">[Exhibition title]</span></h4>
+          <p>by <span class="ph-inline">[Artist name]</span></p>
+        </article>
+        <article class="archive-card">
+          <img src="img/archive-02.jpg" alt="Past exhibition" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:14px; display:block;" loading="lazy">
+          <span class="when">February 2026</span>
+          <h4><span class="ph-inline">[Exhibition title]</span></h4>
+          <p>by <span class="ph-inline">[Artist name]</span></p>
+        </article>
+        <article class="archive-card">
+          <img src="img/archive-03.jpg" alt="Past exhibition" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:14px; display:block;" loading="lazy">
+          <span class="when">January 2026</span>
+          <h4><span class="ph-inline">[Exhibition title]</span></h4>
+          <p>by <span class="ph-inline">[Artist name]</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="artist-apply">
+    <div class="wrap apply-grid">
+      <div>
+        <span class="eyebrow" style="color: var(--pink); opacity:1;">For artists</span>
+        <h2 style="margin-top: 14px;">Want to show <em>with us?</em></h2>
+        <p style="margin-top: 18px;">
+          We're booked roughly three months out. We don't take commission, we don't charge to exhibit. We do ask that you can attend an opening on the first Friday of your month.
+        </p>
+      </div>
+      <div style="text-align: right;">
+        <a href="#" class="btn btn-capture">Submit your work →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ====================  PAGE: CONTACT  ======================= -->
+<!-- ============================================================ -->
+<main data-page="contact">
+
+  <section class="contact-hero">
+    <div class="wrap">
+      <span class="eyebrow">Come visit</span>
+      <h1 style="margin-top: 14px;">Find <em>Two Little Giraffes.</em></h1>
+    </div>
+  </section>
+
+  <section class="contact-body" id="contact-info-anchor">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Say hello</span></div>
+    </div>
+    <div class="wrap contact-grid">
+
+      <div class="contact-info">
+        <div class="info-block">
+          <h4>Address</h4>
+          <p>184 Thessaly Road<br>London, SW8 4ED<br>United Kingdom</p>
+        </div>
+
+        <div class="info-block">
+          <h4>Hours</h4>
+          <ul class="hours">
+            <li><span class="day">Mon – Thu</span><span>07:00 — 18:00</span></li>
+            <li><span class="day">Friday</span><span>07:00 — 20:00</span></li>
+            <li><span class="day">Saturday</span><span>09:00 — 20:00</span></li>
+            <li><span class="day">Sunday</span><span>09:00 — 18:00</span></li>
+          </ul>
+        </div>
+
+        <div class="info-block">
+          <h4>Get in touch</h4>
+          <p>
+            <a href="mailto:info@twolittlegiraffes.co.uk">info@twolittlegiraffes.co.uk</a><br>
+            <a href="tel:+447535175947">07535 175947</a>
+          </p>
+          <p class="hand" style="margin-top: 6px; font-size: 22px;">we love a phone call!</p>
+        </div>
+
+        <div class="info-block">
+          <h4>Follow along</h4>
+          <p>
+            <a href="https://instagram.com/twolittlegiraffes_" target="_blank" rel="noopener">Instagram @twolittlegiraffes_</a><br>
+            <a href="https://tiktok.com/@twolittlegiraffes" target="_blank" rel="noopener">TikTok @twolittlegiraffes</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <iframe
+          src="https://maps.google.com/maps?q=Two+Little+Giraffes+London&output=embed&z=17"
+          style="border:0; width:100%; height:100%; display:block;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Two Little Giraffes location">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="faq" id="faq-anchor">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="bar"></span><span class="eyebrow">Frequently asked</span></div>
+      <h2>The <em>questions</em> we hear most.</h2>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Why do you only have six flavours?</summary>
+          <div class="ans">Because everything is made fresh, every morning, from real ingredients. Six is what one family can do properly. More than that, and something gets cut — and we don't cut.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How often do the seasonal flavours change?</summary>
+          <div class="ans">Roughly every month, sometimes faster — it depends on what's in season and what we can get from our suppliers. Sign up to the newsletter and you'll know first.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I book the gelato bike for my event?</summary>
+          <div class="ans">Yes — visit the <a data-link="bike">gelato bike page</a> for details and to send us an enquiry. We're usually booked 2–6 weeks ahead.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do you offer dairy-free options?</summary>
+          <div class="ans">Almost always. At least two of our six flavours are dairy-free at any given moment — usually a fruit sorbetto and an oat-milk gelato.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Are you open in winter?</summary>
+          <div class="ans">Yes — gelato is for every season. Winter flavours lean towards chocolate, hazelnut, chestnut and ricotta-based gelatos. Summer is when fruits and sorbetti take over.</div>
+        </details>
+        <details class="faq-item">
+          <summary>I'm an artist — how do I exhibit?</summary>
+          <div class="ans">Have a look at our <a data-link="art">art page</a> for the programme. We're usually booked three months out. Submissions are open all year.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do you do catering / wholesale?</summary>
+          <div class="ans">For events, our gelato bike is the answer — see the <a data-link="bike">bike page</a>. We don't currently do wholesale or supply to other businesses; the shop is small and we want to keep it that way.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ====================  FOOTER (all pages)  ================== -->
+<!-- ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <div class="widget-mark" style="max-width: 200px; border-radius: 18px; margin-bottom: 18px;">
+          <img src="img/widget-mark.jpg" alt="Two Little Giraffes — café · gelato">
+        </div>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li><a data-link="contact" data-anchor="contact-info-anchor">Address &amp; hours</a></li>
+          <li><a data-link="contact" data-anchor="faq-anchor">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a data-link="about">About us</a></li>
+          <li><a data-link="bike">Gelato bike</a></li>
+          <li><a data-link="art">Art exhibitions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow along</h4>
+        <ul>
+          <li><a href="https://instagram.com/twolittlegiraffes_" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://tiktok.com/@twolittlegiraffes" target="_blank" rel="noopener">TikTok</a></li>
+          <li><a data-link="home" data-anchor="join-us-anchor">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© [year] Two Little Giraffes. All rights reserved.</span>
+      <span class="foot-meta">
+        <span>Handmade in Battersea</span>
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================ -->
+<!-- =============  FLAVOUR DATA (editable JSON)  =============== -->
+<!-- ============================================================
+  At go-live, this JSON gets replaced by EITHER:
+  (a) a fetch() to a published Google Sheet (recommended for Niko)
+  (b) a fetch() to a headless CMS API (e.g. Sanity, Storyblok)
+  (c) a static flavours.json file edited via the host
+  The render code below stays the same — only the data source changes.
+============================================================ -->
+<script type="application/json" id="flavours-data">
+{
+  "lastUpdated": "4 June 2026",
+  "flavours": [
+    { "name": "Fior di latte", "type": "staple", "origin": "Lombardia, Italy", "description": "The purest gelato — just milk, cream and sugar. Delicate, impossibly fresh and always here.", "tags": ["Vegetarian", "Gluten-free"], "swatch": "img/flavour-01.jpg" },
+    { "name": "Cioccolato fondente", "type": "staple", "origin": "Ecuador", "description": "78% single-origin dark chocolate with a deep, bitter-edged richness. Niko doesn't sweeten it to death.", "tags": ["Vegetarian", "Gluten-free"], "swatch": "img/flavour-02.jpg" },
+    { "name": "Fragola & basilico", "type": "seasonal", "origin": "Campania, Italy", "description": "Strawberry sorbetto with a thread of fresh basil. Bright, grassy and a little unexpected.", "tags": ["Vegan", "Dairy-free", "Sorbetto"], "swatch": "img/flavour-03.jpg" },
+    { "name": "Limone di Sicilia", "type": "seasonal", "origin": "Sicily, Italy", "description": "Lemon sorbetto made with whole Sicilian lemons — rind included. Bracing, floral and addictive.", "tags": ["Vegan", "Dairy-free", "Sorbetto"], "swatch": "img/flavour-04.jpg" },
+    { "name": "Caffè e cardamomo", "type": "seasonal", "origin": "Ethiopia", "description": "Espresso gelato with a warm cardamom finish. Made with beans from our neighbours at the Battersea roastery.", "tags": ["Vegan", "Dairy-free"], "swatch": "img/flavour-02.jpg" },
+    { "name": "Pistacchio di Bronte", "type": "seasonal", "origin": "Sicily, Italy", "description": "Bronte DOP pistachios — hand-harvested every two years. Earthy, intensely nutty, vivid natural green.", "tags": ["Vegetarian", "Gluten-free"], "swatch": "img/flavour-01.jpg" },
+    { "name": "Melone estivo", "type": "seasonal", "origin": "Emilia-Romagna, Italy", "description": "Cantaloupe from the Po Valley, picked at peak sweetness. Pure summer in a cup — delicate and fleeting.", "tags": ["Vegetarian", "Gluten-free"], "swatch": "img/flavour-04.jpg" },
+    { "name": "Lampone & rosa", "type": "seasonal", "origin": "Provence, France", "description": "Wild raspberry sorbetto with a hint of dried rose petal. Tart, fragrant and unmistakably summer.", "tags": ["Vegan", "Dairy-free"], "swatch": "img/flavour-03.jpg" }
+  ]
+}
+</script>
+
+<script>
+/* ============================================================
+   Page router (hash-based) + nav state
+   ============================================================ */
+const PAGES = ["home","menu","about","bike","art","contact"];
+const pages = document.querySelectorAll("[data-page]");
+const navLinks = document.querySelectorAll("[data-link]");
+
+function showPage(name){
+  const target = PAGES.includes(name) ? name : "home";
+  pages.forEach(p => {
+    if (p.dataset.page === target){ p.setAttribute("data-active",""); }
+    else { p.removeAttribute("data-active"); }
+  });
+  navLinks.forEach(a => {
+    if (a.dataset.link === target){ a.setAttribute("aria-current","page"); }
+    else { a.removeAttribute("aria-current"); }
+  });
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  // Update URL hash if we're allowed. Sandboxed iframes (claude.ai artifact
+  // viewer uses about:srcdoc) block history.replaceState — fail silently there;
+  // works normally once the site is on a real domain.
+  try {
+    if (window.location.hash !== "#" + target){
+      history.replaceState(null, "", "#" + target);
+    }
+  } catch (e) { /* sandboxed context — ignore */ }
+}
+
+navLinks.forEach(a => {
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    closeMenu();
+    showPage(a.dataset.link);
+    if (a.dataset.anchor) {
+      const target = document.getElementById(a.dataset.anchor);
+      if (target) setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    }
+  });
+});
+
+/* ---------- hamburger menu ---------- */
+const navToggle   = document.querySelector(".nav-toggle");
+const navDropdown = document.getElementById("nav-dropdown");
+
+function syncNavHeight(){
+  const h = document.querySelector(".nav").getBoundingClientRect().height;
+  document.documentElement.style.setProperty("--nav-h", h + "px");
+}
+syncNavHeight();
+window.addEventListener("resize", syncNavHeight);
+
+function closeMenu(){
+  navDropdown.classList.remove("open");
+  navToggle.setAttribute("aria-expanded","false");
+  navToggle.setAttribute("aria-label","Open navigation menu");
+}
+
+navToggle.addEventListener("click", () => {
+  const isOpen = navDropdown.classList.toggle("open");
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+  navToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+});
+
+document.addEventListener("click", e => {
+  if (!document.getElementById("site-nav").contains(e.target) &&
+      !navDropdown.contains(e.target)) closeMenu();
+});
+
+window.addEventListener("hashchange", () => {
+  const h = window.location.hash.replace("#","");
+  // Only intercept hashes that are real page names. Otherwise it's an in-page
+  // anchor (e.g. #flavours-anchor) and the browser should scroll normally.
+  if (PAGES.includes(h)) showPage(h);
+});
+
+// initial route
+const initial = window.location.hash.replace("#","");
+showPage(PAGES.includes(initial) ? initial : "home");
+
+/* ============================================================
+   Flavour board renderer
+   Reads from #flavours-data JSON (or fetch() in production)
+   ============================================================ */
+function renderFlavours(){
+  const dataEl = document.getElementById("flavours-data");
+  if (!dataEl) return;
+  let data;
+  try { data = JSON.parse(dataEl.textContent); }
+  catch (e) { console.error("Bad flavour JSON", e); return; }
+
+  const grid = document.getElementById("flavour-grid");
+  const updated = document.getElementById("flavours-updated");
+  const updatedBike = document.getElementById("flavours-bike-updated");
+  const updatedText = "Last updated: " + (data.lastUpdated || "—");
+  if (updated) updated.textContent = updatedText;
+  if (updatedBike) updatedBike.textContent = updatedText;
+
+  grid.innerHTML = data.flavours.map(f => {
+    const hasName   = f.name && f.name.trim();
+    const hasOrigin = f.origin && f.origin.trim();
+    const hasDesc   = f.description && f.description.trim();
+    const hasSwatch = f.swatch && f.swatch.trim();
+
+    const isPhoto = f.swatch && (f.swatch.startsWith('http') || f.swatch.startsWith('data:image') || /\.(jpe?g|png|webp|gif|avif)$/i.test(f.swatch));
+    const swatchHtml = hasSwatch
+      ? isPhoto
+        ? `<div class="swatch swatch-photo" style="background-image:url('${f.swatch}');"></div>`
+        : `<div class="swatch" style="background: ${f.swatch};">${hasName ? f.name : ''}</div>`
+      : `<div class="swatch swatch-empty"></div>`;
+
+    const nameHtml   = hasName   ? f.name        : `<span class="ph-inline">Flavour name</span>`;
+    const originHtml = hasOrigin ? f.origin      : `<span class="ph-inline">Origin · season</span>`;
+    const descHtml   = hasDesc   ? f.description : `<span class="ph-inline">Tasting notes go here once Niko has filled them in.</span>`;
+
+    const tagsHtml = (f.tags || []).map(t => `<span>${t}</span>`).join("");
+
+    return `
+      <article class="flavour-card">
+        ${swatchHtml}
+        <div>
+          <span class="origin">${originHtml}</span>
+          <h3>${nameHtml}</h3>
+        </div>
+        <p>${descHtml}</p>
+        <div class="icons">${tagsHtml}</div>
+      </article>
+    `;
+  }).join("");
+}
+renderFlavours();
+
+/* ============================================================
+   In production, replace renderFlavours() data source with:
+
+   // OPTION A — Google Sheets (recommended)
+   fetch("https://opensheet.elk.sh/SHEET_ID/Sheet1")
+     .then(r => r.json())
+     .then(rows => render(rows));
+
+   // OPTION B — Sanity (headless CMS)
+   fetch("https://PROJECT_ID.api.sanity.io/v2024-01-01/data/query/production?query=*[_type=='flavour']")
+     .then(r => r.json())
+     .then(d => render(d.result));
+
+   // OPTION C — static file
+   fetch("/data/flavours.json").then(r => r.json()).then(render);
+
+   The card markup stays identical.
+   ============================================================ */
+</script>
+
+</body>
+</html>
